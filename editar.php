@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="container ">
-        <h1 class="text-center m-3" >Editar Contacto</h1>
+        <h1 class="text-center m-3 text-succes" >Editar Contacto</h1>
         <a href="index.php" class="btn btn-secondary ">Listado Contactos</a>
         <br><br>
         

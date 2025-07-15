@@ -29,9 +29,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 </head>
 
 <body>
-    
-
-    
     <div class="container ">
         <h1 class="text-center" >Nuevo contacto</h1>
         <a href="index.php" class="btn btn-secondary ">Listado Contactos</a>
@@ -42,15 +39,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
             <div class="mb-3">
                 <label for="" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="nombre">
+                <input type="text" class="form-control" name="nombre" required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Teléfono</label>
-                <input type="number" class="form-control" name="telefono">
+                <input type="number" class="form-control" name="telefono" required>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email">
+                <input type="email" class="form-control" name="email" required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
