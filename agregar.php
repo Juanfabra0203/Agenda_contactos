@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <body>
     <div class="container ">
-        <h1 class="text-center" >Nuevo contacto</h1>
+        <h1 class="text-center text-info m-3" >NUEVO CONTACTO</h1>
         <a href="index.php" class="btn btn-secondary ">Listado Contactos</a>
         <br><br>
         

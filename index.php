@@ -20,7 +20,7 @@
     ?>
     <div class="container">
 
-        <h1 class="text-center text-success">CONTACTOS</h1>
+        <h1 class="text-center text-success m-3">CONTACTOS</h1>
         <br>
         <a href="agregar.php" class="btn btn-primary">+ Nuevo Contacto</a>
         <br><br>
@@ -31,7 +31,6 @@
                     <caption>Lista de contactos</caption>
                     <thead class="table-light sticky-top">
                         <tr>
-                            <th scope="col">ID</th> 
                             <th scope="col">NOMBRE</th>
                             <th scope="col">TELEFONO</th>
                             <th scope="col">EMAIL</th>
@@ -42,11 +41,20 @@
                         <?php
                         while ($fila = $resultado->fetch_assoc()) {
                             echo "<tr>
-                                    <th scope='row'>{$fila['id']}</th>
                                     <td>{$fila['nombre']}</td>
                                     <td>{$fila['telefono']}</td>
                                     <td>{$fila['email']}</td>
-                                    <td> <a href='editar.php?id={$fila['id']}' > <i class='bi bi-pencil-square'></i> </a> </td>
+                                    <td>
+
+                                        <a href='editar.php?id={$fila['id']}'> 
+                                            <i class='bi bi-pencil-square'></i> 
+                                        </a> 
+
+                                        <a href='eliminar.php?id={$fila['id']}'>
+                                            <i class='bi bi-trash'></i>
+                                        </a>
+                                        
+                                    </td>
                                 </tr>";
                         }
                         ?>
