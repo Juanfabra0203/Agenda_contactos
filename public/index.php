@@ -9,14 +9,15 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Agendar Contactos</title>
 </head>
+
 <body>
     <?php
-    include 'conexion.php';
-    
-    $sql = "SELECT * FROM contactos";
-    $resultado = $conexion ->query($sql);
 
-    
+    require_once __DIR__ . "/../src/controllers/ContactoControl.php";
+
+    $controller = new ContactoControl();
+    $contactos = $controller->iniciar();
+
     ?>
     <div class="container">
 
@@ -38,34 +39,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        while ($fila = $resultado->fetch_assoc()) {
-                            echo "<tr>
-                                    <td>{$fila['nombre']}</td>
-                                    <td>{$fila['telefono']}</td>
-                                    <td>{$fila['email']}</td>
-                                    <td>
-
-                                        <a href='editar.php?id={$fila['id']}'> 
-                                            <i class='bi bi-pencil-square'></i> 
-                                        </a> 
-
-                                        <a href='eliminar.php?id={$fila['id']}'>
-                                            <i class='bi bi-trash'></i>
-                                        </a>
-                                        
-                                    </td>
-                                </tr>";
-                        }
-                        ?>
+                        <?php foreach ($contactos as $c): ?>
+                            <tr>
+                                <td><?= $c['nombre'] ?></td>
+                                <td><?= $c['telefono'] ?></td>
+                                <td><?= $c['email'] ?></td>
+                                <td>
+                                    <a href="editar.php?id=<?= $c['id'] ?>">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="eliminar.php?id=<?= $c['id'] ?>">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    
 
-    
+
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 

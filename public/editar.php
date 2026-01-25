@@ -1,7 +1,9 @@
 
 <?php
 
-include 'conexion.php';
+require_once __DIR__ . "/../src/controllers/ContactoControl.php";
+
+$controller = new ContactoControl();
 
 if(!isset($_GET['id'])){
     echo "No se obtuvo el id";
@@ -10,15 +12,8 @@ if(!isset($_GET['id'])){
 
 $id = $_GET["id"];
 
-$sql = "SELECT * FROM contactos WHERE id = '$id' ";
-$resultado = $conexion->query($sql);
+$contacto = $controller->buscar($id);
 
-if ($resultado->num_rows === 0) {
-    echo "Contacto no encontrado";
-    exit;
-}
-
-$contacto = $resultado->fetch_assoc();
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,12 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono = $_POST['telefono'];
     $email = $_POST['email'];
 
-    $sql = "UPDATE contactos SET nombre = '$nombre' , telefono = '$telefono' , email = '$email'  WHERE id = '$id' ";
+    $controller->actualizar($id,$nombre,$telefono,$email);
 
-    if ($conexion->query($sql) === TRUE) {
-        header("Location: index.php");
-        exit;
-    }
+    header("Location: index.php");
+    exit;
 }
 
 ?>

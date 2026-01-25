@@ -1,19 +1,19 @@
 <?php 
-include 'conexion.php';
+require_once __DIR__ . "/../src/controllers/ContactoControl.php";;
+
+$controller = new ContactoControl();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $nombre = $_POST['nombre'];
-    $telefono = $_POST['telefono'];
-    $email = $_POST['email'];
 
-    $sql = "INSERT INTO contactos (nombre,telefono,email) VALUES ('$nombre','$telefono','$email');";
+    $nombre = trim($_POST['nombre']);
+    $telefono = trim($_POST['telefono']);
+    $email = trim($_POST['email']);
+
+    $controller->nuecontac($nombre,$telefono,$email);
     
-    if ($conexion->query($sql) == TRUE) {
-        header("Location: index.php");
-        exit();
-    }else{
-        echo "No se pudo guardar". $conexion->error;
-    }
+    header("Location: index.php");
+    exit();
+    
 }
 
 ?>

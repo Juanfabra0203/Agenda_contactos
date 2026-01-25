@@ -1,6 +1,8 @@
 <?php 
 
-include 'conexion.php';
+require_once __DIR__ . "/../src/controllers/ContactoControl.php";
+
+$controller = new ContactoControl();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -10,13 +12,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 
     $id = $_POST['id'];
-    $sql = "DELETE FROM contactos WHERE id = '$id' ";
 
-    if($conexion->query($sql) === TRUE){
-        header("Location: index.php");
-    }else{
-        echo "Error al elmininar" . $conexion->error;
-    }
+    $contacto = $controller->eliminar($id);
+    
+    header("Location: index.php");
 
 }
 
@@ -30,17 +29,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
     $id = $_GET['id'];
 
-    $sql = "SELECT * FROM contactos WHERE id = '$id' ";
-    $result = $conexion->query($sql);
-
-
-
-    if($result->num_rows === 0){
-        echo "No se encontraron elementos";
-        exit;
-    }
-
-    $contacto = $result->fetch_assoc();
+    $contacto = $controller->buscar($id);
 
 }
 
