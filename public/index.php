@@ -16,7 +16,14 @@
     require_once __DIR__ . "/../src/controllers/ContactoControl.php";
 
     $controller = new ContactoControl();
-    $contactos = $controller->iniciar();
+    $contactos = [];
+
+    if(isset($_GET['buscar']) && !empty($_GET['buscar'])){
+        $texto = $_GET['buscar'];
+        $contactos = $controller->buscarTexto($texto);
+    }else{
+        $contactos = $controller->iniciar();
+    }
 
     ?>
     <div class="container">
@@ -26,10 +33,26 @@
         <a href="agregar.php" class="btn btn-primary">+ Nuevo Contacto</a>
         <br><br>
 
+
+
         <div class="container d-flex justify-content-center col-7">
             <div class="table-responsive" style="max-height: 300px; min-width: 700px;">
+                
+                <form action="GET" class="d-flex align-items-center">
+                    <input type="text" 
+                    name="texto"
+                    placeholder="Buscar por nombre , telefono , email" 
+                    class="form-control me-2"
+                    value="<?= isset($_GET['texto'])  ? htmlspecialchars($_GET['texto']) : " " ?>">
+
+                    
+                    <button class="btn btn-primary mx-4">Buscar</button>
+                </form>
+
                 <table class="table table-striped table-hover table-bordered table-sm text-center caption-top mb-0">
+
                     <caption>Lista de contactos</caption>
+
                     <thead class="table-light sticky-top">
                         <tr>
                             <th scope="col">NOMBRE</th>
