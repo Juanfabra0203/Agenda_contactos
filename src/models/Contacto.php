@@ -29,10 +29,31 @@ class Contacto{
         return $query->fetch();
     }
 
-    public function buscarXTxt($texto){
-        $query = $this->dtb->prepare("SELECT * FROM contactos WHERE nombre LIKE ? OR telefono LIKE ? OR email LIKE ?");
+    public function buscarXTxt($texto,$filtro){
         $texto = "%$texto%";
-        $query->execute([$texto,$texto,$texto]);
+
+        switch($filtro){
+            case "nombre":
+                $sql = "SELECT * FROM contactos WHERE nombre LIKE ?";
+                $valor = [$texto];
+                break;
+            case "email" : 
+                $sql = "SELECT * FROM contactos WHERE email LIKE ?";
+                $valor = [$texto];
+                break;
+            case "telefono" : 
+                $sql = "SELECT * FROM contactos WHERE telefono LIKE ?";
+                $valor = [$texto];
+                break;
+            default:
+                $sql = "SELECT * FROM contactos WHERE nombre LIKE ? OR email LIKE ? OR telefono LIKE ?";
+                $valor = [$texto,$texto,$texto];
+                break;
+        }
+            
+
+        $query = $this->dtb->prepare($sql);
+        $query->execute($valor);
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 

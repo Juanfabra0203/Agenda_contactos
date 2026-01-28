@@ -14,8 +14,8 @@ class ContactoControl{
         return $this->modelo->obtenerContactos();
     }
 
-    public function buscarTexto($texto){
-        return $this->modelo->buscarXTxt($texto);
+    public function buscarTexto($texto,$filtro){
+        return $this->modelo->buscarXTxt($texto,$filtro);
 
     }
 

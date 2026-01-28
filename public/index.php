@@ -18,10 +18,11 @@
     $controller = new ContactoControl();
     $contactos = [];
 
-    if(isset($_GET['buscar']) && !empty($_GET['buscar'])){
-        $texto = $_GET['buscar'];
-        $contactos = $controller->buscarTexto($texto);
-    }else{
+    if (isset($_GET['texto']) && !empty($_GET['texto'])) {
+        $texto = $_GET['texto'];
+        $filtro = $_GET['filtro'] ?? 'todo';
+        $contactos = $controller->buscarTexto($texto, $filtro);
+    } else {
         $contactos = $controller->iniciar();
     }
 
@@ -37,16 +38,22 @@
 
         <div class="container d-flex justify-content-center col-7">
             <div class="table-responsive" style="max-height: 300px; min-width: 700px;">
-                
-                <form action="GET" class="d-flex align-items-center">
-                    <input type="text" 
-                    name="texto"
-                    placeholder="Buscar por nombre , telefono , email" 
-                    class="form-control me-2"
-                    value="<?= isset($_GET['texto'])  ? htmlspecialchars($_GET['texto']) : " " ?>">
 
-                    
-                    <button class="btn btn-primary mx-4">Buscar</button>
+                <form method="GET" action="index.php" class="d-flex align-items-center">
+                    <input type="text"
+                        name="texto"
+                        placeholder="Buscar por nombre , telefono , email"
+                        class="form-control me-2"
+                        value="<?= isset($_GET['texto'])  ? htmlspecialchars($_GET['texto']) : "" ?>">
+
+                        <select name="filtro" class="form-select" style="width: 200px;" id="">
+                            <option value="todo">Todos los campos</option>
+                            <option value="nombre" <?= (isset($_GET['filtro']) && $_GET['filtro'] == 'nombre') ? 'selected'  : "" ;  ?>>Nombre</option>
+                            <option value="email" <?=(isset($_GET['filtro']) && $_GET['filtro'] == 'email' ) ? 'selected' : "" ?>>Email</option>
+                            <option value="telefono" <?=(isset($_GET['filtro'] ) && $_GET['filtro'] == 'telefono' ) ? 'selected' : "" ?>>Telefono</option>
+                        </select>
+
+                    <button type="submit" class="btn btn-primary mx-4">Buscar</button>
                 </form>
 
                 <table class="table table-striped table-hover table-bordered table-sm text-center caption-top mb-0">
@@ -77,6 +84,15 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+
+                        <?php if (empty($contactos)): ?>
+                            <tr>
+                                <td colspan="4" class="text-center text-danger">
+                                    No se encontraron resultados.
+                                </td>   
+                            </tr>
+                        <?php endif; ?>
+
                     </tbody>
                 </table>
             </div>
